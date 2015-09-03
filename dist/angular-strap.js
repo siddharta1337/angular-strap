@@ -1796,8 +1796,8 @@
         var match, displayFn, valueName, keyName, groupByFn, valueFn, valuesFn;
         $parseOptions.init = function() {
           $parseOptions.$match = match = attr.match(options.regexp);
-          displayFn = $parse(match[2] || match[1]), valueName = match[4] || match[6], keyName = match[5], 
-          groupByFn = $parse(match[3] || ''), valueFn = $parse(match[2] ? match[1] : valueName), 
+          displayFn = $parse(match[2] || match[1]), valueName = match[4] || match[6], keyName = match[5],
+          groupByFn = $parse(match[3] || ''), valueFn = $parse(match[2] ? match[1] : valueName),
           valuesFn = $parse(match[7]);
         };
         $parseOptions.valuesFn = function(scope, controller) {
@@ -3447,7 +3447,9 @@
           var selected = angular.isDefined(index) ? typeahead.$scope.$matches[index].label : controller.$viewValue;
           selected = angular.isObject(selected) ? parsedOptions.displayValue(selected) : selected;
           var value = selected ? selected.toString().replace(/<(?:.|\n)*?>/gm, '') : '';
-          element.val(options.trimValue === false ? value : value.trim());
+          //options.trimValue is not working
+          //element.val(options.trimValue === false ? value : value.trim());
+          element.val(value);
         };
         scope.$on('$destroy', function() {
           if (typeahead) typeahead.destroy();
