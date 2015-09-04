@@ -3449,7 +3449,6 @@
           var value = selected ? selected.toString().replace(/<(?:.|\n)*?>/gm, '') : '';
           //options.trimValue is not working
           //element.val(options.trimValue === false ? value : value.trim());
-          console.log('testing');
           element.val(value);
         };
         scope.$on('$destroy', function() {
