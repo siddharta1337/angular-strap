@@ -1,8 +1,8 @@
-# [AngularStrap](http://mgcrea.github.io/angular-strap)
+# [AngularStrap](https://github.com/siddharta1337/angular-strap)
 
 [![Bower Version](http://img.shields.io/bower/v/angular-strap.svg?style=flat)](https://github.com/mgcrea/angular-strap/releases) [![Build Status](http://img.shields.io/travis/mgcrea/angular-strap/master.svg?style=flat)](http://travis-ci.org/mgcrea/angular-strap) [![devDependency Status](http://img.shields.io/david/dev/mgcrea/angular-strap.svg?style=flat)](https://david-dm.org/mgcrea/angular-strap#info=devDependencies) [![Coverage Status](http://img.shields.io/codeclimate/coverage/github/mgcrea/angular-strap.svg?style=flat)](https://codeclimate.com/github/mgcrea/angular-strap) [![Climate Status](https://img.shields.io/codeclimate/github/mgcrea/angular-strap.svg?style=flat)](https://codeclimate.com/github/mgcrea/angular-strap)
 
-[![Banner](http://mgcrea.github.io/angular-strap/images/snippet.png)](http://mgcrea.github.io/angular-strap)
+[![Banner](https://github.com/siddharta1337/angular-strap/images/snippet.png)](https://github.com/siddharta1337/angular-strap)
 
 AngularStrap is a set of native directives that enables seamless integration of [Bootstrap 3.0+](https://github.com/twbs/bootstrap) into your [AngularJS 1.2+](https://github.com/angular/angular.js) app.
 
@@ -15,7 +15,7 @@ AngularStrap is a set of native directives that enables seamless integration of 
 
 ## Documentation and examples
 
-+ Check the [documentation](http://mgcrea.github.io/angular-strap) and [changelog](https://github.com/mgcrea/angular-strap/releases).
++ Check the [documentation](https://github.com/siddharta1337/angular-strap) and [changelog](https://github.com/mgcrea/angular-strap/releases).
 
 
 ## Communication

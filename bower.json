@@ -6,12 +6,12 @@
     "angular",
     "bootstrap"
   ],
-  "homepage": "http://mgcrea.github.io/angular-strap",
-  "bugs": "https://github.com/mgcrea/angular-strap/issues",
+  "homepage": "https://github.com/siddharta1337/angular-strap",
+  "bugs": "https://github.com/siddharta1337/angular-strap/issues",
   "author": {
     "name": "Olivier Louvignes",
     "email": "olivier@mg-crea.com",
-    "url": "https://github.com/mgcrea"
+    "url": "https://github.com/siddharta1337"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/mgcrea/angular-strap/blob/master/LICENSE.md"
+      "url": "https://github.com/siddharta1337/angular-strap/blob/master/LICENSE.md"
     }
   ],
   "main": [

@@ -7,7 +7,7 @@
     "bootstrap"
   ],
   "main": "dist/angular-strap.js",
-  "homepage": "http://mgcrea.github.io/angular-strap",
+  "homepage": "https://github.com/siddharta1337/angular-strap",
   "bugs": "https://github.com/mgcrea/angular-strap/issues",
   "author": {
     "name": "Olivier Louvignes",
