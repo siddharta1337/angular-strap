@@ -1,11 +1,7 @@
 {
   "name": "angular-strap-wi",
   "description": "AngularStrap - AngularJS directives for Bootstrap",
-<<<<<<< HEAD
-  "version": "2.3.1.1",
-=======
   "version": "2.3.3",
->>>>>>> mgcrea/master
   "keywords": [
     "angular",
     "bootstrap"
