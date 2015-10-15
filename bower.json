@@ -1,6 +1,6 @@
 {
   "name": "angular-strap-wi",
-  "description": "AngularStrap - AngularJS directives for Bootstrap",
+  "description": "AngularStrap - AngularJS directives for Bootstrap modified for wear interactive",
   "version": "2.3.3",
   "keywords": [
     "angular",
