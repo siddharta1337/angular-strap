@@ -10,13 +10,17 @@ describe('dropdown', function () {
   beforeEach(module('ngSanitize'));
   beforeEach(module('mgcrea.ngStrap.dropdown'));
 
-  beforeEach(inject(function (_$rootScope_, _$compile_, _$templateCache_, _$animate_, _$timeout_, _$dropdown_) {
+  beforeEach(inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$animate_, _$timeout_, _$dropdown_) {
     scope = _$rootScope_.$new();
     sandboxEl = $('<div>').attr('id', 'sandbox').appendTo($('body'));
     $compile = _$compile_;
     $templateCache = _$templateCache_;
-    $animate = _$animate_;
-    $timeout = _$timeout_;
+    $animate = $injector.get('$animate');
+    $timeout = $injector.get('$timeout');
+    var flush = $animate.flush || $animate.triggerCallbacks;
+    $animate.flush = function() {
+      flush.call($animate); if(!$animate.triggerCallbacks) $timeout.flush();
+    };
     $dropdown = _$dropdown_;
   }));
 
@@ -59,7 +63,7 @@ describe('dropdown', function () {
       element: '<a data-html="{{html}}" bs-dropdown="dropdown">click me</a>'
     },
     'options-template': {
-      element: '<a title="{{dropdown.title}}" data-template-url="custom" bs-dropdown>click me</a>'
+      element: '<a title="{{dropdown.title}}" data-template-url="custom" bs-dropdown="dropdown">click me</a>'
     },
     'bsShow-attr': {
       scope: {dropdown: [{text: 'Another action', href: '#foo'}, {text: 'External link', href: '/auth/facebook', target: '_self'}, {text: 'Something else here', click: '$alert(\'working ngClick!\')'}, {divider: true}, {text: 'Separated link', href: '#separatedLink'}]},
@@ -72,6 +76,10 @@ describe('dropdown', function () {
     'options-container': {
       scope: {dropdown: [{text: 'bar', href: '#foo'}]},
       element: '<a data-container="{{container}}" bs-dropdown="dropdown">click me</a>'
+    },
+    'undefined-dropdown': {
+      scope: {},
+      element: '<a bs-dropdown="dropdown">click me</a>'
     }
   };
 
@@ -131,19 +139,19 @@ describe('dropdown', function () {
     it('should not create additional scopes after first show', function() {
       var elm = compileDirective('default');
       angular.element(elm[0]).triggerHandler('click');
-      $animate.triggerCallbacks();
+      $animate.flush();
       expect(sandboxEl.children('.dropdown-menu').length).toBe(1);
       angular.element(elm[0]).triggerHandler('click');
-      $animate.triggerCallbacks();
+      $animate.flush();
       expect(sandboxEl.children('.dropdown-menu').length).toBe(0);
 
       var scopeCount = countScopes(scope, 0);
 
       for (var i = 0; i < 10; i++) {
         angular.element(elm[0]).triggerHandler('click');
-        $animate.triggerCallbacks();
+        $animate.flush();
         angular.element(elm[0]).triggerHandler('click');
-        $animate.triggerCallbacks();
+        $animate.flush();
       }
 
       expect(countScopes(scope, 0)).toBe(scopeCount);
@@ -157,9 +165,9 @@ describe('dropdown', function () {
 
       for (var i = 0; i < 10; i++) {
         angular.element(elm[0]).triggerHandler('click');
-        $animate.triggerCallbacks();
+        $animate.flush();
         angular.element(elm[0]).triggerHandler('click');
-        $animate.triggerCallbacks();
+        $animate.flush();
       }
 
       scope.$destroy();
@@ -241,31 +249,37 @@ describe('dropdown', function () {
   describe('show / hide events', function() {
 
     it('should dispatch show and show.before events', function() {
-      var myDropdown = $dropdown(sandboxEl, templates['default'].scope.dropdown);
+      var myDropdown = $dropdown(sandboxEl);
       var emit = spyOn(myDropdown.$scope, '$emit');
       scope.$digest();
-      myDropdown.show();
+			myDropdown.$promise.then( function(){
+        myDropdown.$scope.content = templates['default'].scope.dropdown;
+        myDropdown.show();
 
-      expect(emit).toHaveBeenCalledWith('dropdown.show.before', myDropdown);
-      // show only fires AFTER the animation is complete
-      expect(emit).not.toHaveBeenCalledWith('dropdown.show', myDropdown);
-      $animate.triggerCallbacks();
-      expect(emit).toHaveBeenCalledWith('dropdown.show', myDropdown);
+        expect(emit).toHaveBeenCalledWith('dropdown.show.before', myDropdown);
+        // show only fires AFTER the animation is complete
+        expect(emit).not.toHaveBeenCalledWith('dropdown.show', myDropdown);
+        $animate.flush();
+        expect(emit).toHaveBeenCalledWith('dropdown.show', myDropdown);
+			});
     });
 
     it('should dispatch hide and hide.before events', function() {
-      var myDropdown = $dropdown(sandboxEl, templates['default'].scope.dropdown);
+      var myDropdown = $dropdown(sandboxEl);
       scope.$digest();
-      myDropdown.show();
+			myDropdown.$promise.then( function(){
+        myDropdown.$scope.content = templates['default'].scope.dropdown;
+        myDropdown.show();
 
-      var emit = spyOn(myDropdown.$scope, '$emit');
-      myDropdown.hide();
+        var emit = spyOn(myDropdown.$scope, '$emit');
+        myDropdown.hide();
 
-      expect(emit).toHaveBeenCalledWith('dropdown.hide.before', myDropdown);
-      // hide only fires AFTER the animation is complete
-      expect(emit).not.toHaveBeenCalledWith('dropdown.hide', myDropdown);
-      $animate.triggerCallbacks();
-      expect(emit).toHaveBeenCalledWith('dropdown.hide', myDropdown);
+        expect(emit).toHaveBeenCalledWith('dropdown.hide.before', myDropdown);
+        // hide only fires AFTER the animation is complete
+        expect(emit).not.toHaveBeenCalledWith('dropdown.hide', myDropdown);
+        $animate.flush();
+        expect(emit).toHaveBeenCalledWith('dropdown.hide', myDropdown);
+      });
     });
 
     it('should call show.before event with dropdown element instance id', function() {
@@ -414,6 +428,17 @@ describe('dropdown', function () {
       })
 
     })
+
+  });
+
+  describe('with undefined dropdown', function(){
+
+    it('shouldn\'t open on click', function(){
+      var elm = compileDirective('undefined-dropdown');
+      expect(sandboxEl.children('.dropdown-menu').length).toBe(0);
+      angular.element(elm[0]).triggerHandler('click');
+      expect(sandboxEl.children('.dropdown-menu').length).toBe(0);
+    });
 
   });
 
